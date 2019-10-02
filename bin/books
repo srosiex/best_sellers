@@ -1,0 +1,5 @@
+require_relative "../lib/cli"
+require_relative "../lib/book"
+require_relative "../lib/scraper"
+
+CLI.new.run
