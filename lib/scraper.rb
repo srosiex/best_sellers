@@ -4,10 +4,16 @@ require 'pry'
 
 class Scraper
 
+    def get_page
+        Nokogiri::HTML(open("https://www.barnesandnoble.com/b/new-releases/_/N-1oyg"))
+    end
 
-doc = Nokogiri::HTML(open("https://www.barnesandnoble.com/b/new-releases/_/N-1oyg"))
-doc.css("div.sidebar__section refinements")
+    def scrape_genres
+        self.get_page.css("div.refinements").text
+    end
+scrape_genres
 binding.pry
+
 
 end
 
