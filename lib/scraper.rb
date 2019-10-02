@@ -4,18 +4,41 @@ require 'pry'
 
 class Scraper
 
-    def get_page
-        Nokogiri::HTML(open("https://www.barnesandnoble.com/b/new-releases/_/N-1oyg"))
+    USA_URL = "https://www.usatoday.com/entertainment/books/best-selling/"
+    USA_TODAY_URL = "https://www.usatoday.com"
+
+    def self.scrape_usa
+        html = open(USA_URL)
+        doc = Nokogiri::HTML(html)
+        doc.css("div.front-booklist-info-container").each do |book_element|
+            title = book_element.css(".books-front-meta-title").text
+            author = book_element.css(".books-front-meta-authorInfo").text
+            url = book_element.css(".front-booklist-image-rating-container a").attribute("href").value
+            Book.new(title, author, url)
+                end
     end
 
-    def scrape_genres
-        self.get_page.css("div.refinements").text
+    def self.scrape_book(book)
+        html = open(USA_TODAY_URL+book.url)
+        doc = Nokogiri::HTML(html)
+        description = doc.search(".asset-double-wide.double-wide.NonReviewedBook p").map {|p| p.text} 
+        description[9]
+        # genre = doc.search(".books-stories-meta-genre p").each {|p|
+        #     p.remove if p.name == 'span'}
+        #     genre
+        # binding.pry
     end
-scrape_genres
-binding.pry
 
+
+
+
+     
+      
+   
 
 end
 
-#genres - .css("div.refinements").text
-#url - .css("a.bread-crumbs__item").attribute("href").value
+# title - .css(".books-stories-meta-title").text
+#by_author - .css(".books-stories-meta-author").text.strip
+
+

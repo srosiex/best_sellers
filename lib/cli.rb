@@ -1,20 +1,38 @@
+
+
 class CLI
+    def run
+        books = []
+        puts "Welcome! Here are some best sellers!"
+        puts "What book would you like to check out?"
+         Scraper.scrape_usa
 
-    def call
-        list_genres
+        Book.all.each.with_index(1) do |book, i|
+            puts "#{i}. #{book.title}"
+        end
         menu
-        quit
-    end
-
-    def list_genres
-        puts "Book Genres:"
-        @genres = 
-        @genres.each.with_index(1) do |genre, i|
-            puts "#{i}. #{genre}"
     end
 
     def menu
+        puts "Please select a book to find out more info."
+        input = gets.chomp
+        book = Book.all[input.to_i-1]
+
+        if !book
+            puts "Book not found. Please select a different book."
+            menu
+        else
+            Scraper.scrape_book(book)
+        end
     end
 
-    def quit
-    end
+end
+ 
+
+
+
+#books info - 
+#title - book_element.css(".books-front-meta-title").text
+
+
+
