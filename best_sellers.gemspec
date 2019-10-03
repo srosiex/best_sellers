@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "new_books/version"
+require "best_sellers/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "new_books"
-  spec.version       = NewBooks::VERSION
+  spec.name          = "best_sellers"
+  spec.version       = BestSellers::VERSION
   spec.authors       = ["'Sarah H'"]
   spec.email         = ["'sarahrose.henderson@gmail.com'"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Find best books!}
+  spec.description   = %q{Helps you find the best books}
+  spec.homepage      = "https://www.github.com"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-    spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+    # spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
+    # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
