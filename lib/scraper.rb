@@ -3,6 +3,7 @@ require 'open-uri'
 require 'pry'
 
 class Scraper
+    
 
     USA_URL = "https://www.usatoday.com/entertainment/books/best-selling/"
     USA_TODAY_URL = "https://www.usatoday.com"
@@ -12,33 +13,36 @@ class Scraper
         doc = Nokogiri::HTML(html)
         doc.css("div.front-booklist-info-container").each do |book_element|
             title = book_element.css(".books-front-meta-title").text
-            author = book_element.css(".books-front-meta-authorInfo").text
+            # author = book_element.css(".books-front-meta-authorInfo").text
             url = book_element.css(".front-booklist-image-rating-container a").attribute("href").value
-            Book.new(title, author, url)
+            # genre = book_element.css(".books-front-meta-genre").text.delete("Genre:")
+            Book.new(title, url)
                 end
     end
 
     def self.scrape_book(book)
         html = open(USA_TODAY_URL+book.url)
         doc = Nokogiri::HTML(html)
-        description = doc.search(".asset-double-wide.double-wide.NonReviewedBook p").map {|p| p.text} 
-        description[9]
-        # genre = doc.search(".books-stories-meta-genre p").each {|p|
-        #     p.remove if p.name == 'span'}
-        #     genre
-        # binding.pry
+        book.title = doc.css(".books-stories-meta-title").text
+        book.author = doc.css(".books-stories-meta-author").text.strip
+        book.this_weeks_ranking = doc.css("div.story-book-ranking-content p.book-this-week-number").text.split.last
+        book.description = doc.css(".asset-double-wide.double-wide.NonReviewedBook p").map {|p| p.text}.last
+        book.genre = doc.css(".books-stories-meta-genre").text.capitalize.split.last
+        book.weeks_listed = doc.css(".book-last-week-count").text
+          
     end
-
-
-
-
+        
+   
+    
+  
      
-      
    
 
 end
 
 # title - .css(".books-stories-meta-title").text
 #by_author - .css(".books-stories-meta-author").text.strip
-
+# this_weeks_ranking - doc.css("div.story-book-ranking-content p.book-this-week-number").text.split.last
+#review_url - doc.css("div.story-asset.goodreads-asset a").attribute("href").value
+#genre - doc.css(".books-stories-meta-genre").text.split.last
 
