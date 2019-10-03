@@ -21,6 +21,7 @@ class Scraper
     end
 
     def self.scrape_book(book)
+        return if !!book.description
         html = open(USA_TODAY_URL+book.url)
         doc = Nokogiri::HTML(html)
         book.title = doc.css(".books-stories-meta-title").text

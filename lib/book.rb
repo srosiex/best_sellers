@@ -5,7 +5,6 @@ class Book
     
     def initialize(title, url)
         @title = title
-        @author = author
         @url = url
        
         @@all << self
