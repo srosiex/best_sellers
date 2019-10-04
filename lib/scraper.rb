@@ -13,11 +13,9 @@ class Scraper
         doc = Nokogiri::HTML(html)
         doc.css("div.front-booklist-info-container").each do |book_element|
             title = book_element.css(".books-front-meta-title").text
-            # author = book_element.css(".books-front-meta-authorInfo").text
             url = book_element.css(".front-booklist-image-rating-container a").attribute("href").value
-            # genre = book_element.css(".books-front-meta-genre").text.delete("Genre:")
             Book.new(title, url)
-                end
+        end
     end
 
     def self.scrape_book(book)
@@ -32,12 +30,6 @@ class Scraper
         book.weeks_listed = doc.css(".book-last-week-count").text
           
     end
-        
-   
-    
-  
-     
-   
 
 end
 

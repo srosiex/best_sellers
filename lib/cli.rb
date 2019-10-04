@@ -17,7 +17,6 @@ class CLI
     def menu
         puts "Please select a book to find out more info."
         input = gets.chomp
-        # binding.pry
         if !input.to_i.between?(1, Book.all.length)
             puts "Book not found. Please select a different book."
             menu
@@ -25,25 +24,8 @@ class CLI
             book = Book.all[input.to_i-1]
             Scraper.scrape_book(book)
             display_book(book)
-                        
-            puts "Would you like to look at another book? - y/n "
-                input = gets.strip.downcase
-                if input == "y"
-                    puts "--------------------------------------------"
-                    Book.all.each.with_index(1) do |book, i|
-                        puts "#{i}. #{book.title}"
-                    end
-                elsif input == "n"
-                    puts "--------------------------------------------"
-                    puts "Thank you! Goodbye!"
-                    exit
-                else input != "y" || "n"
-                    puts "I don't understand."
-                    puts "--------------------------------------------"
-                    run
-                end
-         menu
-        
+            see_more(book)
+            menu
         end
     end
 
@@ -58,6 +40,31 @@ class CLI
             puts "Description: #{book.description}"
             
             puts "--------------------------------------------"
+        end
+
+        def see_more(book)
+            puts "Would you like to look at another book? - y/n "
+            input = gets.strip.downcase
+            if input == "y"
+                puts "--------------------------------------------"
+                Book.all.each.with_index(1) do |book, i|
+                    puts "#{i}. #{book.title}"
+                end
+            elsif input == "n"
+                puts "--------------------------------------------"
+                puts "Thank you! Goodbye!"
+                exit
+            else 
+                input != "y" && "n"
+                puts "I don't understand. Please select a book."
+                puts "--------------------------------------------"
+                Book.all.each.with_index(1) do |book, i|
+                    puts "#{i}. #{book.title}"
+                end
+            
+                             
+            end
+        
         end
 
 end
